@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${post.title}</title>
+    <script src="https://kit.fontawesome.com/3cdd729c01.js" crossorigin="anonymous"></script>
+    <style>
+        *,
+        *:before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .hello {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .logo {
+            width: 40%;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .title {
+            background: #eee;
+            font-weight: bolder;
+            color: transparent;
+            padding: 5px 15px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .title h2 {
+            color: #70a
+        }
+
+        .goLink {
+            display: block;
+            padding: 10px;
+            margin: 10px;
+            background: linear-gradient(to right bottom, #70a, #f20);
+            color: white;
+            text-transform: uppercase;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .topic {
+            font-size: 25px;
+            margin-bottom: 15px;
+            text-transform: capitalize;
+            text-align: center;
+        }
+
+        .poem {
+            margin-bottom: 100px;
+        }
+
+        .bg {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .content {
+            z-index: 1000;
+            position: relative;
+            line-height: 1.4;
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+            border: 1px solid #ddd;
+            margin: -80px 10px 0 10px;
+            padding: 20px;
+        }
+
+        .content p {
+            margin-bottom: 10px;
+        }
+
+        .inmage {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        footer {
+            padding: 10px;
+            color: #fff;
+            background: linear-gradient(to right bottom, #70a, #f20);
+        }
+
+        footer h4 {
+            text-align: center;
+            color: #fe0;
+            text-transform: capitalize;
+        }
+
+        footer .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .buttons a {
+            color: #fff;
+            font-size: 30px;
+            display: inline-block;
+            margin: 0 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="hello">Hello ${email.split('@')[0]} </h1> <img class="logo" src="https://regwrites.now.sh/logo.png"
+        alt="" />
+    <div class="title">
+        <h2>A new post from Regwrites</h2>
+    </div>
+    <div class="poem"> <img class="bg" src="${post.src}" />
+        <article class="content">
+            <h1 class="topic">${post.title}</h1> <a href="${url}" class="goLink">Go to post</a> ${post.body.substring(0,
+            600)} <a href="${url}">..Read more</a> <img src="${post.src}" class="inmage" />
+            <h4>Category : ${cat} </h4>
+        </article>
+    </div>
+    <!-- <footer>
+        <h4>Follow me</h4>
+        <div class="buttons"> <a href="facebook.com"> <i class="fa fa-facebook"></i> </a> <a href="facebook.com"> <i
+                    class="fa fa-instagram"></i> </a> <a href="facebook.com"> <i class="fa fa-twitter"></i> </a> </div>
+    </footer> -->
+</body>
+
+</html>

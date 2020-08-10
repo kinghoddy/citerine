@@ -1,0 +1,174 @@
+.backdrop {
+  background: rgba(0, 00, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4000;
+}
+.wrapper {
+  height: 100%;
+  width: 100%;
+  transition: 0.3s;
+  margin: 0 auto;
+  /* border: 1px solid #294; */
+  box-shadow: 0 10px 30px rgba(0, 00, 0, 0.2);
+  background: #284;
+  display: flex;
+  flex-direction: column;
+}
+.statusbar {
+  display: flex;
+  align-items: center;
+  /* border-bottom: 1px solid #eee; */
+  height: 1.8rem;
+  justify-content: space-between;
+}
+.light {
+  background: #fff;
+}
+.light .sBtn {
+  color: #000;
+}
+.light .btnCancel:hover {
+  color: #fff;
+}
+.statusbar > * {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.sBtn {
+  background: none;
+  border: 0;
+  transition: 0.3s;
+  height: 100%;
+  width: 40px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sBtn i {
+  /* font-size: 18px; */
+}
+.sBtn:hover {
+  background: rgba(0, 00, 0, 0.1);
+}
+.sBtn:active {
+  box-shadow: 0 0rem 2rem rgba(255, 255, 255, 0.5);
+}
+.sBtn:focus {
+  outline: 0 !important;
+  border: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+.btnCancel:hover {
+  background: #f33;
+}
+.btnCancel:active,
+.btnCancel:focus {
+  background: #e33;
+  outline: 0;
+}
+.file {
+  color: #fe8;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  /* background: green; */
+  height: 2.4rem;
+  padding: 0.5rem;
+  border-top: 1px solid #eee;
+}
+.toolbar > * {
+  align-self: stretch;
+}
+.arrows {
+  display: flex;
+}
+.arrows button {
+  background: none;
+  border: 0;
+  transition: 0.3s;
+  height: 100%;
+  width: 30px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.arrows button:hover {
+  color: #55f;
+}
+.arrows button.active {
+  color: #000;
+}
+.arrows button:focus {
+  outline: 0;
+}
+.urlBox {
+  border: 1px solid #dfdfdf;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.searchBox {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  border: 1px solid #dfdfdf;
+  width: 30%;
+}
+.searchBox > * {
+  align-self: stretch;
+  border: 0;
+  outline: 0;
+  background: none;
+  display: flex;
+}
+
+.searchBox input {
+  padding: 0 6px;
+  width: 75%;
+  font-size: 0.8rem;
+}
+.searchBox button {
+  width: 15%;
+  flex-shrink: 0;
+  align-items: center;
+}
+.sideNav {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  border-right: 1px solid #eee;
+  flex: 0 0 15%;
+  background: #333;
+  overflow: auto;
+}
+.content {
+  flex: 1;
+  align-self: stretch;
+}
+@media only screen and (min-width: 760px) {
+}
+@media only screen and (min-width: 1200px) {
+  .wrapper {
+    height: 85vh;
+    width: 70vw;
+    margin: 2rem auto 0 auto;
+  }
+  .searchBox {
+    flex: 0 0 20%;
+  }
+  .searchBox input {
+    width: 88%;
+  }
+  .searchBox button {
+    width: 12%;
+  }
+}

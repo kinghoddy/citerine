@@ -1,0 +1,37 @@
+.toast {
+    background: rgba(1, 1, 1, 0.8);
+    animation: toast 3s 1s ease-out;
+    position: fixed;
+    z-index: 1000;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    color: #ddd;
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    padding: .5rem 1.3rem
+}
+
+@keyframes toast {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0%);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -15rem);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translate(-50%, -15rem);
+
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 0%);
+
+    }
+}

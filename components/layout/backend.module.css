@@ -1,0 +1,133 @@
+.wrapper {
+  min-height: 100vh;
+  padding-top: 3rem;
+  padding-left: 0rem;
+  transition: 0.3s ease-out;
+  min-width: 99vw;
+  background: #f7f8fc;
+  overflow: hidden;
+}
+
+.show {
+  padding-left: 15rem;
+}
+
+.navbar {
+  transition: 0.3s ease-out;
+  z-index: 1000;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.navbar button {
+  background: none;
+  outline: 0 !important;
+}
+.show .navbar {
+  margin-left: 15rem;
+}
+.brand {
+  display: flex;
+  align-items: center;
+}
+.brand span {
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.Sidenav {
+  transition: 0.3s ease-out;
+  color: white;
+  background: url("/img/nav-bg.png"),
+    linear-gradient(to right bottom, #222222, #333333);
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: -15rem;
+  width: 15rem;
+  z-index: 1200;
+  height: 100%;
+}
+.show .Sidenav {
+  left: 0;
+}
+.Sidenav h1 {
+  margin: 0;
+  display: flex;
+  color: white;
+  font-size: 1.4rem;
+  font-family: Arial, Helvetica, sans-serif !important;
+  padding: 0.5rem;
+  align-items: center;
+}
+.Sidenav h1 img {
+  height: 3rem;
+}
+.Sidenav h4 {
+  text-transform: uppercase;
+  font-size: medium;
+  padding-left: 0.5rem;
+}
+.sidenavLink {
+  color: #ddd;
+  padding: 0 1rem;
+  display: flex;
+  text-decoration: none !important;
+  align-items: center;
+  height: 3rem;
+}
+.sidenavLink:hover,
+.active {
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.brand img {
+  height: 3rem;
+}
+.picture {
+  height: 2.5rem;
+  width: 2.5rem;
+  overflow: hidden;
+}
+.picture img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1100;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: all 0.3s;
+}
+.logo {
+  width: 80%;
+  display: block;
+  margin: 1rem auto;
+}
+@media only screen and (min-width: 1200px) {
+  .backdrop {
+    display: none;
+  }
+  .wrapper {
+    padding-left: 15rem;
+  }
+  .navbar {
+    margin-left: 15rem;
+  }
+  .show .navbar {
+    margin-left: 2rem;
+  }
+  .Sidenav {
+    left: 0rem;
+  }
+  .show .Sidenav {
+    left: -13rem;
+  }
+  .show {
+    padding-left: 2rem;
+  }
+}

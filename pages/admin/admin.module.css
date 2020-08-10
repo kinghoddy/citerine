@@ -1,0 +1,31 @@
+.card {
+  height: 10rem;
+  width: 100%;
+  color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card:hover {
+  color: #eee;
+}
+.card > div {
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.card i {
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.card p {
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border-top: 1px inset #777;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,30 @@
+{
+  "name": "regwrites",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^19.0.2",
+    "@ckeditor/ckeditor5-react": "^2.1.0",
+    "@sendgrid/mail": "^7.1.1",
+    "animate.css": "^4.1.0",
+    "bootstrap": "^4.5.0",
+    "ckeditor4-react": "^1.1.1",
+    "datatables.net-bs4": "^1.10.21",
+    "firebase": "^7.14.5",
+    "firebase-functions": "^3.8.0",
+    "jquery": "^3.5.1",
+    "next": "9.4.0",
+    "nodemailer": "^2.4.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-scroll-parallax": "^2.3.2",
+    "scroll-out": "^2.2.8",
+    "simple-parallax-js": "^5.4.0",
+    "wow.js": "^1.2.2"
+  }
+}

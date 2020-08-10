@@ -1,0 +1,32 @@
+.formLabelGroup {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.formLabelGroup > input {
+  padding: 0.5rem 2rem;
+  height: auto;
+}
+
+.formLabelGroup > input {
+  background: none !important;
+  border: 0;
+  border-bottom: 2px solid #06f;
+  box-shadow: none !important;
+}
+
+.formLabelGroup > input:focus {
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.formLabelGroup > input:valid {
+  border-bottom: 2px solid rgba(65, 138, 17, 0.6);
+}
+
+.formLabelGroup > input:focus:not(:valid) {
+  border-bottom: 2px solid rgba(255, 68, 0, 0.6);
+}
+
+.formLabelGroup > label {
+  display: none;
+}

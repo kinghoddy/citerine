@@ -1,0 +1,21 @@
+[
+    {
+        "name": "logo",
+        "type": "folder",
+        "children": [
+            {
+                "name": "logo1",
+                "type": "folder"
+            },
+            {
+                "name": "logo2",
+                "type": "folder"
+            }
+        ]
+    },
+    {
+        "name": "ministers",
+        "type": "folder",
+        "children": []
+    }
+]
