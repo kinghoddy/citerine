@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Layout from '../../components/layout/backend';
 import firebase from '../../firebase';
 import 'firebase/database'
-import Link from 'next/link'
-import 'firebase/storage';
-import PlaceHolder from '../../components/placeHolder/placeholder'
 
 export default class Category extends Component {
 
@@ -21,7 +18,7 @@ export default class Category extends Component {
         firebase.database().ref('users').once('value', s => {
             const u = [];
             for (let key in s.val()) {
-                u.push({
+                if (s.val()[key].activated === true) u.push({
                     ...s.val()[key],
                     uid: key
                 })
@@ -44,7 +41,8 @@ export default class Category extends Component {
                 if (!data.payee) data.payee = '';
                 r.push(data)
             }
-            const $ = require('jquery');
+            const $ = require('jquery')
+            require('datatables.net-bs4')
             $(document).ready(function () {
                 $('#activations').DataTable({
                     "pageLength": 5,

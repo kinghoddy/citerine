@@ -105,6 +105,12 @@ export default class extends Component {
                         </a>
                     </Link>
 
+                    <Link activeClassName={classes.active} href="/admin/transactions">
+                        <a className={classes.sidenavLink} >
+                            <i className="material-icons mr-1">payment</i>Transactions
+                        </a>
+                    </Link>
+
                     <Link activeClassName={classes.active} href="/admin/activation">
                         <a className={classes.sidenavLink} >
                             <i className="material-icons mr-1">desktop_windows</i>Activations

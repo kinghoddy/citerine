@@ -1,6 +1,7 @@
 .wrapper {
   min-height: 100vh;
   padding-top: 3rem;
+  position: relative;
   padding-left: 0rem;
   transition: 0.3s ease-out;
   min-width: 99vw;

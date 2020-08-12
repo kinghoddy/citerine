@@ -89,6 +89,11 @@ export default class extends Component {
                                     <i className="material-icons mr-1">dashboard</i>  Dashboard
                         </a>
                             </Link>
+                            <Link activeClassName={'active'} href="/transactions">
+                                <a className={'sidenavLink'}>
+                                    <i className="fal fa-newspaper mr-1"></i>  Transactions
+                        </a>
+                            </Link>
                             <Link activeClassName={'active'} href="/testimonials">
                                 <a className={'sidenavLink'}>
                                     <i className="fal fa-newspaper mr-1"></i>  Testimonials

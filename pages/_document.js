@@ -20,7 +20,6 @@ class MyDocument extends Document {
                     <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
                     <link rel="shortcut icon" href="/favicon.png" />
                     <link rel="stylesheet" href="/css/index.css" />
-                    <script src="/js/jquery.js"></script>
                     <script src="/js/wow.min.js"></script>
                     <script src="/js/bootstrap.min.js"></script>
                     <script src="/js/bootstrap.bundle.min.js"></script>

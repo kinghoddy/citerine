@@ -9,6 +9,7 @@ export default timestamp => {
         "May",
         "Jun",
         "Jul",
+        "Aug",
         "Sep",
         "Oct",
         "Nov",

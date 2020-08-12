@@ -5,6 +5,7 @@ import 'firebase/database';
 import 'firebase/auth';
 import 'firebase/storage'
 import Link from 'next/link';
+import Card from '../components/card'
 import Spinner from '../components/UI/Spinner/Spinner'
 
 class Dashboard extends React.Component {
@@ -52,6 +53,7 @@ class Dashboard extends React.Component {
         })
     }
     openModal = () => {
+        const $ = require('jquery')
         $('#uploadModal').modal({
             keyboard: false,
             backdrop: 'static'
@@ -283,6 +285,17 @@ class Dashboard extends React.Component {
                     </div>}
                     {this.state.activated === true && <React.Fragment>
                         Your account has been activated
+                         <div className="row">
+                            <div className="col-6 col-md-4 ">
+                                <Card title={'Your Earnings'} href='/transactions' theme={'orange'} body='#0.00' icon='fa-money-bill' />
+                            </div>
+                            <div className="col-6 col-md-4 ">
+                                <Card title={'Investments'} href='/transactions' theme={'green'} body='#0.00' icon='fa-receipt' />
+                            </div>
+                            <div className="col-6 col-md-4 ">
+                                <Card title={'Notifications'} href='/notifications' theme={'#28d'} body='0' icon='fa-bell' />
+                            </div>
+                        </div>
                     </React.Fragment>}
                 </div>
                 }
