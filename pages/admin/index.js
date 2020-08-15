@@ -6,6 +6,7 @@ import 'firebase/database'
 class index extends Component {
     state = {
         users: [],
+        investments: 0,
         activations: 0
     }
     componentDidMount() {
@@ -13,6 +14,10 @@ class index extends Component {
         firebase.database().ref('activationReq/').on('value', s => {
             let act = s.numChildren();
             this.setState({ activations: act })
+        })
+        firebase.database().ref('transactions/').on('value', s => {
+            let act = s.numChildren();
+            this.setState({ investments: act })
         })
     }
 
@@ -41,6 +46,18 @@ class index extends Component {
                 <section className="content" >
                     <div className="container">
                         <div className="row">
+                            <div className="col-md-6 col-lg-4">
+                                <div className="Card">
+                                    <div>
+                                        <h4>Investments</h4>
+                                        {this.state.investments}
+                                    </div>
+                                    <Link href="/admin/transactions" >
+                                        <a>Details <i className="fal fa-arrow-right"></i> </a>
+                                    </Link>
+                                </div>
+                            </div>
+
                             <div className="col-md-6 col-lg-4">
                                 <div className="Card">
                                     <div>

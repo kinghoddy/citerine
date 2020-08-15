@@ -78,12 +78,12 @@ export default class extends Component {
                         <div className={'backdrop'} onClick={this.toggleSidenav}></div>
                         : null}
                     <div className="Sidenav">
-                        <div className="d-flex align-items-center py-3 px-2">
-                            <img src="/logo.png" style={{ width: "5rem" }} />
-                            <div className="pl-2" ><h4 className="h6 mb-0" >CITRINE</h4> <span>Rewards</span>  </div>
-                        </div>
-                        <div>
-
+                        <div className="mb-3">
+                            <Link href="/">
+                                <a className="text-light d-flex align-items-center py-3 px-2">
+                                    <img src="/img/logo/logo_dark_2.png" style={{ width: "80%" }} />
+                                </a>
+                            </Link>
                             <Link activeClassName={'active'} href="/dashboard">
                                 <a className={'sidenavLink'}>
                                     <i className="material-icons mr-1">dashboard</i>  Dashboard
@@ -91,7 +91,7 @@ export default class extends Component {
                             </Link>
                             <Link activeClassName={'active'} href="/transactions">
                                 <a className={'sidenavLink'}>
-                                    <i className="fal fa-newspaper mr-1"></i>  Transactions
+                                    <i className="fal fa-sack-dollar mr-1"></i>  Transactions
                         </a>
                             </Link>
                             <Link activeClassName={'active'} href="/testimonials">
@@ -121,7 +121,7 @@ export default class extends Component {
                         </div>
                     </div>
                     <div className="content">
-                        <nav className="d-flex bg-white border-bottom justify-content-between px-3 py-1">
+                        <nav className=" d-flex sticky-top bg-white border-bottom justify-content-between px-3 py-1">
                             <div className="d-flex align-items-center">
 
                                 <button className="btn" onClick={this.toggleSidenav} >
@@ -135,52 +135,50 @@ export default class extends Component {
                                 <button onClick={this.logOutHandler} className="btn btn-dark btn-sm ml-3">  Logout </button>
                             </div>
                         </nav>
-
-                        <div className="p-3" >
+                        <div className="p-2 w-100">
                             {this.props.children}
                         </div>
                     </div>
                 </div>
                 <style jsx>{`
                 .con {
-                    background : linear-gradient(to right bottom , orange, purple);
+                    background : linear-gradient(to  bottom , #f82, #d20);
                 }
                 .wrapper {
-                    background : white;
-                    overflow: hidden;
-                    box-shadow : 0 10px 40px rgba(0,0,0,.8);
+                    box-shadow : 0 10px 30px rgba(0,0,0,.3);
                     display : flex;
                     min-height: 100vh;
+                    overflow-x : hidden;
+                    overflow-y : visible;
                     transition: 0.3s ease-out;
                 }
                 .content {
                     flex : 1;
-                    background : #f7f8fc
+                    max-width : 100vw;
+                    background : #f7f8fc;
                 }
                 
                 .Sidenav {
                     transition: 0.3s ease-out;
-                    color: white;
-                    background: url("/img/nav-bg.png"), linear-gradient(to right bottom, #333333, #222222);
+                    color: #222;
+                    background: url("/img/nav-bg.png"), linear-gradient(to  bottom, #fff, #fff);
                     background-size: cover;
                     width : 13rem;
-                    position : relative;
                     z-index : 2000;
                     flex-shrink : 0;
                     margin-left : -13rem;
+                    display : flex;
+                    flex-direction : column;
+                    justify-content : space-between
                 }
                 .show .Sidenav{
                     margin-left : 0;
                 }
                 .lower {
-                    background : #ffffff11;
-                    position : sticky ;
+                    background : #ddd5;
                     padding : 10px;
-                    margin-top : 3rem;
-                    top:0;
                     display  : flex ;
                     align-items : center;
-                    left : 0;
                 }
                 .lower img {
                     height : 30px;
@@ -195,17 +193,21 @@ export default class extends Component {
                     font-size : 14px;
                 }
 .sidenavLink {
-  color: #ddd;
-  padding: 0 1rem;
+  color: #555;
+  padding-left : calc(1rem + 8px);
   display: flex;
   text-decoration: none !important;
   align-items: center;
   height: 3rem;
+  border-radius : 0 40px 40px 0;
+  transition : all .4s;
 }
 .sidenavLink:hover,
 .active {
   background: rgba(100, 40, 0, 0.5);
   color: white;
+  padding-left : 1rem;
+  border-left : 8px solid  #f81
 }
 .backdrop {
   width: 100vw;
@@ -219,7 +221,7 @@ export default class extends Component {
 }
 @media only screen and (min-width: 1200px) {
     .con {
-        padding : 6rem 0;
+        padding : 2rem 0 4rem;
     }
     .backdrop {
         display: none;

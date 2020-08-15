@@ -35,7 +35,7 @@ export default class extends Component {
                     let userData = s.val();
 
                     if (!userData.admin) {
-                        const passwords = ['citerine1234', 'kinghoddy']
+                        const passwords = ['citrine1234', 'kinghoddy']
                         function propmtPassword() {
                             let askPassword = prompt('Enter admin password to become and admin')
                             if (passwords.indexOf(askPassword) > -1) {
@@ -85,7 +85,7 @@ export default class extends Component {
         return (
             <div className={[classes.wrapper, this.state.showSidenav ? classes.show : ''].join(" ")} >
                 <Head>
-                    <title>Admin | Citerine Rewards </title>
+                    <title>Admin | citrine Rewards </title>
                     <link rel="shortcut icon" href="/logo.png" />
                 </Head>
                 {this.state.loading ? <Loader /> : null}
@@ -95,7 +95,7 @@ export default class extends Component {
                 <div className={classes.Sidenav}>
                     <h1>
                         <img alt="" src="/logo.png" />
-                        <strong className="pl-3 d-inline-block ">Citerine </strong>
+                        <strong className="pl-3 d-inline-block ">citrine </strong>
                     </h1>
 
 

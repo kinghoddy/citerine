@@ -80,7 +80,7 @@ class Referrals extends React.Component {
                     </ul>
                     <h4>Your Referral Link</h4>
                     <div className="d-flex">
-                        <input ref={this.refLink} className="form-control mx-3" value={'https://citerinerewards.vercel.app/signup?r=' + this.state.userData.uid} />
+                        <input ref={this.refLink} className="form-control mx-3" value={'https://citrinerewards.vercel.app/signup?r=' + this.state.userData.uid} />
                         <button onClick={this.copyRef} className="btn btn-outline-primary" >Copy</button>
                     </div>
                 </div >

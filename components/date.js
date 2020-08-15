@@ -22,9 +22,10 @@ export default timestamp => {
     var week = weekDays[now.getDay()];
     var hour = now.getHours();
     var min = dec(now.getMinutes());
-    var clock = " am";
+    var clock = " AM";
+    if (hour === 0) hour = 12;
+    else if (hour > 11) clock = ' PM';
     if (hour > 12) {
-        clock = " pm";
         hour -= 12
     }
     function dec(num) {

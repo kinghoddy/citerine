@@ -5,49 +5,54 @@ export default props => {
         <div className="container ">
             <div className="row py-5 align-items-center">
                 <div className="col-12 col-md-6 col-lg-3 mb-2">
-                    {/* <img className="logo" src="/logo.png" alt="" /> */}
+                    <img className="img-fluid" src="/img/logo/logo_dark_1.png" alt="" />
                 </div>
                 <div className="col pt-4 pt-md-0">
                     <div className="row no-gutters">
-
-                        <div className="col-12  col-lg-3 mb-2">
+                        <div className="col-12  col-lg-3 ">
                             <h4 className="mb-4">Quick Links</h4>
                             <ul>
                                 <li>
-                                    <Link href="/blog" >
-                                        <a> Blog </a>
+                                    <Link href="/dashboard" >
+                                        <a> Dashboard </a>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/blog" >
-                                        <a> Poems </a>
+                                    <Link href="/account" >
+                                        <a> My account </a>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/blog" >
-                                        <a> Short stories </a>
+                                    <Link href="/signup" >
+                                        <a> Signup </a>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/blog" >
-                                        <a> Reviews </a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/blog" >
+                                    <Link href="/login" >
                                         <a> Login </a>
                                     </Link>
                                 </li>
+                                <li>
+                                    <Link href="/#contact" >
+                                        <a> Referrals </a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/#contact" >
+                                        <a> Contact </a>
+                                    </Link>
+                                </li>
+
 
                             </ul>
                         </div>
-                        <div className="col-12  col-lg-3 mb-2">
+                        <div className="col-12  col-lg-3 ">
                             <h4 className="mb-4">Contact</h4>
                             <ul>
                                 <li className="my-2">
                                     <a href="mailto:sayoF4real@yahoo.com" className="d-flex align-items-center">
                                         <i className="fad fa-2x mr-4 fa-mail-bulk text-warning "></i>
-                                        <span >sayoF4real@yahoo.com</span>
+                                        <span >citrinerewards@gmail.com</span>
                                     </a>
                                 </li>
                                 <li className="my-2">
@@ -80,15 +85,15 @@ export default props => {
         </div>
         <style jsx>{`
         footer {
-            background : #222;
-            color : white;
+            background : #eef;
+            color : var(--dark);
         }
         footer ul {
             list-style : none;
             padding : 0;
         }
         footer ul a {
-            color : white;
+            color : var(--dark);
         }
         .logo {
             width : auto;
@@ -97,7 +102,7 @@ export default props => {
             margin : auto;
         }
         .bottom * {
-            color : rgba(255,255,255,.8)
+            color : black;
         }
         `} </style>
     </footer>

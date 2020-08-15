@@ -7,6 +7,7 @@ import 'firebase/storage'
 import Link from 'next/link';
 import Card from '../components/card'
 import Spinner from '../components/UI/Spinner/Spinner'
+import $ from 'jquery'
 
 class Dashboard extends React.Component {
     state = {
@@ -30,6 +31,13 @@ class Dashboard extends React.Component {
                 ref.on('value', s => {
                     if (s.val().activated) {
                         let a = s.val().activated
+                        if (a.declined) {
+                            this.setState({
+                                error: <span>Your payment was not approved because of the following reasons : <br /> <b>{a.declined}</b> <br />
+                                    <button onClick={this.openModal} className="btn btn-primary btn-sm"  >Retry</button>
+                                </span>
+                            })
+                        }
                         this.setState({ activated: a })
                         if (a === 'payee') {
                             firebase.database().ref('activationReq/' + user.uid + '/payee').once('value', snap => {
@@ -53,7 +61,7 @@ class Dashboard extends React.Component {
         })
     }
     openModal = () => {
-        const $ = require('jquery')
+        require('bootstrap/dist/js/bootstrap.bundle')
         $('#uploadModal').modal({
             keyboard: false,
             backdrop: 'static'
@@ -121,15 +129,22 @@ class Dashboard extends React.Component {
                     },
                     () => {
                         uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-                            this.setState({
-                                uploading: false,
-                                progressMessage: null,
-                                error: null,
-                            });
+                            if (this.state.error) {
+                                firebase.database().ref('activationReq/' + this.state.userData.uid + '/retry')
+                                    .set(Date.now());
+                            }
                             firebase.database().ref('users/' + this.state.userData.uid + '/activated').set({
-                                img: url
+                                img: url,
+                                retry: this.state.error ? true : null
+                            }).then(() => {
+                                firebase.database().ref('activationReq/' + this.state.userData.uid + '/activated').set(url)
+                                this.setState({
+                                    uploading: false,
+                                    progressMessage: null,
+                                    error: null,
+                                });
                             })
-                            firebase.database().ref('activationReq/' + this.state.userData.uid + '/activated').set(url)
+                            $('#uploadModal').modal('hide')
                         });
                     }
                 );
@@ -143,6 +158,7 @@ class Dashboard extends React.Component {
     render() {
         return (
             <Wrapper route="Dashboard">
+                {this.state.error && <div className="alert alert-danger">{this.state.error}</div>}
                 <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
@@ -229,7 +245,7 @@ class Dashboard extends React.Component {
                 {this.state.loading ? <div style={{ height: '50vh' }}> <Spinner /> </div> : <div>
                     <h3 className="hello" >Hello  {this.state.userData.username} </h3>
                     {this.state.activated.img && <div className="alert alert-success  shadow">
-                        Your  proof of payment has been uploaded successfull <br /> The system will verify your activation and activate your account. Check back fro more info
+                        Your  proof of payment has been uploaded successfull <br /> The system will verify your payment and activate your account. Check back for more info
                                                <button type="button" className="btn mt-2 btn-success" data-toggle="modal" data-target="#proofModal">                        View photo</button>
                     </div>}
                     {this.state.activated === 'payee' && <React.Fragment>
@@ -286,13 +302,13 @@ class Dashboard extends React.Component {
                     {this.state.activated === true && <React.Fragment>
                         Your account has been activated
                          <div className="row">
-                            <div className="col-6 col-md-4 ">
+                            <div className="col-md-6 mb-3 col-lg-4 ">
                                 <Card title={'Your Earnings'} href='/transactions' theme={'orange'} body='#0.00' icon='fa-money-bill' />
                             </div>
-                            <div className="col-6 col-md-4 ">
+                            <div className="col-md-6 mb-3 col-lg-4 ">
                                 <Card title={'Investments'} href='/transactions' theme={'green'} body='#0.00' icon='fa-receipt' />
                             </div>
-                            <div className="col-6 col-md-4 ">
+                            <div className="col-md-6 mb-3 col-lg-4 ">
                                 <Card title={'Notifications'} href='/notifications' theme={'#28d'} body='0' icon='fa-bell' />
                             </div>
                         </div>

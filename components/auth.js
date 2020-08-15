@@ -8,7 +8,7 @@ export default props => {
     <div className="wrapper container-fluid">
       <div className="row" style={{ minHeight: '100vh' }} >
         <div className="form col-md-8 col-lg-6" >
-          <img src="/logo.png" style={{ height: '6rem' }} className="py-3" />
+          <img src="/img/logo/logo_dark_2.png" style={{ width: '25%' }} className="py-3" />
           {props.children}
         </div>
         <div className="col-md-4 col-lg-6" ></div>

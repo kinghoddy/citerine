@@ -36,7 +36,7 @@ export default props => {
             }
             a {
                 font-size : 12px;
-                
+                color : ${props.theme}
             }
         `}</style>
     </div>

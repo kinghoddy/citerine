@@ -72,8 +72,11 @@ export default class Transactions extends React.Component {
                     </form>}
                 </React.Fragment>}
                 <style jsx>{`
+                 form {
+                           flex-direction : column;
+                       }
                    .form-group {
-                       margin : 0;
+                       margin : 20px 0;
                        position : relative;
                    }
                    .am {
@@ -92,10 +95,16 @@ export default class Transactions extends React.Component {
                        border-bottom : 2px solid orangered;
                        padding : 10px;
                        padding-left : 40px;
+                       flex : 1;
                        font-size : 20px;
                    }
                    input:focus {
                        outline : 0;
+                   }
+                   @media only screen and (min-width : 760px){
+                       form {
+                           flex-direction : row
+                       }
                    }
                 `}</style>
             </Layout>

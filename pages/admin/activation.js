@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Layout from '../../components/layout/backend';
 import firebase from '../../firebase';
 import 'firebase/database'
+import date from '../../components/date';
 
 export default class Category extends Component {
 
@@ -29,10 +30,9 @@ export default class Category extends Component {
     getReq = () => {
         this.setState({ loading: true })
         firebase.database().ref('activationReq').on('value', s => {
-
             const r = [];
             for (let keys in s.val()) {
-                let data = { ...s.val()[keys], uid: keys.substring(0, 6) }
+                let data = { ...s.val()[keys], uid: keys }
                 data.key = keys
                 if (!data.activated) data.activated = <span className="text-primary" >Requested</span>;
                 else {
@@ -76,8 +76,18 @@ export default class Category extends Component {
             })
         }
     }
-    decline = () => {
+    decline = (cur) => {
+        const db = firebase.database();
+        const m = prompt('Add a decline message');
+        if (m) db.ref('users//' + cur.uid + '/activated/declined').set(m).then(() => {
 
+            db.ref('users/' + cur.uid + '/activated').set('payee');
+            db.ref('users/' + cur.uid + '/notifications').push({
+                date: Date.now(),
+                title: 'Your proof of payment of activation fee was not approved because of the following reasons <br/>' + m,
+                href: "/dashboard"
+            });
+        });
     }
 
     render() {
@@ -106,7 +116,7 @@ export default class Category extends Component {
                                         <tr key={cur.key}>
                                             <th scope="row">{i + 1}</th>
                                             <td className="text-capitalize" >{cur.username}</td>
-                                            <td>{cur.uid}</td>
+                                            <td>{cur.uid.substring(0, 6)}</td>
 
                                             <td>
                                                 <select value={cur.payee} className="form-control-sm form-control " onChange={(e) => this.payeeChanged(e, i, cur.key)}>
@@ -116,10 +126,15 @@ export default class Category extends Component {
                                                     </option>)}
                                                 </select>
                                             </td>
-                                            <td>{cur.activated}</td>
+                                            <td>
+                                                {cur.retry && <small className="text-warning">
+                                                    Retried {date(cur.retry)}
+                                                </small>}
+                                                {cur.activated}
+                                            </td>
                                             <td className="d-flex">
                                                 <button onClick={() => this.activate(cur.key)} className="btn btn-sm btn-success">Activate</button>
-                                                <button onClick={() => this.decline(cur.key)} className="btn btn-sm btn-danger">Decline</button>
+                                                <button onClick={() => this.decline(cur)} className="btn btn-sm btn-danger">Decline</button>
                                             </td>
                                         </tr>
                                     ))}

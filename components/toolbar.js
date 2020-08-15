@@ -13,15 +13,14 @@ export default props => {
         }
     })
     return < React.Fragment >
-        <nav className=" text-center text-light navTop py-2"  >
+        {/* <nav className=" text-center text-light navTop py-2"  >
             <img src="https://kinghoddy.now.sh/logo.png" style={{ height: '50px' }} className="d-none d-md-block" />  <span className="text">Create Your professional website today at <a href="https://kinghoddy.now.sh" >kinghoddy</a></span>
             <a className="btn btn-sm btn-outline-warning" href="https://kinghoddy.now.sh" >Learn more</a>
-        </nav>
-        <nav className={"toolbar sticky-top navbar-expand-lg navbar navbar-light py-3 px-3 px-md-5"}>
+        </nav> */}
+        <nav className={"toolbar sticky-top navbar-expand-lg navbar navbar-light   px-3 px-md-5"}>
             <Link href="/">
                 <a className="navbar-brand">
-                    <img alt="" src='/logo_text.png' />
-                    <span className="pl-3" >Citrine Rewards</span>
+                    <img alt="" src='/img/logo/logo_dark_3.png' />
                 </a>
             </Link>
             <button
@@ -91,7 +90,7 @@ export default props => {
         .toolbar{
             background : #ffffffaa;
             backdrop-filter :blur(2rem);
-            box-shadow : 0 0px 8px rgba(0,0,0,.1)div>
+            box-shadow : 0 1px 8px rgba(0,0,0,.2)
         }
         .toolbar ul a {
             font-size : 1.2rem;
