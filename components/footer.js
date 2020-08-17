@@ -5,7 +5,7 @@ export default props => {
         <div className="container ">
             <div className="row py-5 align-items-center">
                 <div className="col-12 col-md-6 col-lg-3 mb-2">
-                    <img className="img-fluid" src="/img/logo/logo_dark_1.png" alt="" />
+                    <img className="w-75" src="/img/logo/logo_dark_1.png" alt="" />
                 </div>
                 <div className="col pt-4 pt-md-0">
                     <div className="row no-gutters">
@@ -58,15 +58,11 @@ export default props => {
                                 <li className="my-2">
                                     <a href="tel:08089040350" className="d-flex align-items-center">
                                         <i className="fad fa-2x mr-4 fa-phone-rotary text-warning"></i>
-                                        <span >08089040350</span>
+                                        <i className="fab fa-2x mr-4 fa-whatsapp text-success"></i>
+                                        <span >09071567936</span>
                                     </a>
                                 </li>
-                                <li className="my-2">
-                                    <a href="/" className="d-flex align-items-center">
-                                        <i className="fad fa-2x  mr-4 fa-house-user text-warning "></i>
-                                        <span >Ikorodu , Lagos , Nigeria</span>
-                                    </a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -85,7 +81,7 @@ export default props => {
         </div>
         <style jsx>{`
         footer {
-            background : #eef;
+            background : #eee;
             color : var(--dark);
         }
         footer ul {

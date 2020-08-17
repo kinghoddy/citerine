@@ -17,10 +17,10 @@ export default props => {
             <img src="https://kinghoddy.now.sh/logo.png" style={{ height: '50px' }} className="d-none d-md-block" />  <span className="text">Create Your professional website today at <a href="https://kinghoddy.now.sh" >kinghoddy</a></span>
             <a className="btn btn-sm btn-outline-warning" href="https://kinghoddy.now.sh" >Learn more</a>
         </nav> */}
-        <nav className={"toolbar sticky-top navbar-expand-lg navbar navbar-light   px-3 px-md-5"}>
+        <nav className={"toolbar fixed-top navbar-expand-lg navbar navbar-dark py-2 py-lg-0   px-3 px-md-5"}>
             <Link href="/">
-                <a className="navbar-brand">
-                    <img alt="" src='/img/logo/logo_dark_3.png' />
+                <a className="navbar-brand py-0">
+                    <img alt="" src='/img/logo/logo_light_3.png' />
                 </a>
             </Link>
             <button
@@ -35,7 +35,7 @@ export default props => {
                 <i className="fa fa-bars"></i>
             </button>
             <div className="collapse navbar-collapse" id="navBar">
-                <ul className="navbar-nav  mt-2 mt-lg-0">
+                <ul className="navbar-nav mx-auto  mt-2 mt-lg-0">
                     <li className="nav-item ">
                         <Link activeClassName="active" href="/">
                             <a className="nav-link"> Home</a>
@@ -43,7 +43,7 @@ export default props => {
                     </li>
                     <li className="nav-item ">
 
-                        <Link activeClassName="active" href="/blog">
+                        <Link activeClassName="active" href="/#about">
                             <a className="nav-link">About us </a>
                         </Link>
                     </li>
@@ -63,7 +63,7 @@ export default props => {
                 </ul>
 
                 {userExists ? <Link href="/dashboard">
-                    <a className="btn btn-dark mx-1 ml-auto" >DashBoard</a>
+                    <a className="btn btn-dark" >DashBoard</a>
                 </Link> : <div className="ml-auto d-flex  " >
                         <Link href="/login">
                             <a className="btn btn-dark mx-1 " >Login</a>
@@ -88,21 +88,32 @@ export default props => {
             width : 40%;
         }
         .toolbar{
-            background : #ffffffaa;
-            backdrop-filter :blur(2rem);
-            box-shadow : 0 1px 8px rgba(0,0,0,.2)
+            background : #f31;
         }
         .toolbar ul a {
             font-size : 1.2rem;
-            padding : 1rem 1.5rem;
+            color : #fff;
+            font-weight : bold;
+            padding : 1rem 1.5rem !important;
+        }
+        .toolbar ul a:hover,
+        .active {
+            color : #ff0;
+            border-bottom : 3px solid #fc0;
         }
         .toolbar img {
-            height : ${props.noBg ? '6rem' : '3rem'};
+            height : 3rem;
             transition : .3s;
+            padding : 3px;
         }
         @media only screen and (min-width : 1200px){
-        .toolbar ul a {
-            padding : 0 1.5rem
+          .toolbar{
+            background : ${props.noBg ? 'none' : '#f31'};
+        }
+            .toolbar img {
+            height : ${props.noBg ? '6rem' : '3rem'};
+            transition : .3s;
+            padding :  ${props.noBg ? '10px' : '3px'}
         }
         }
     `} </style>

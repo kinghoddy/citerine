@@ -5,12 +5,12 @@ import Footer from './footer'
 export default props => {
     return <React.Fragment >
         <Head>
-            <meta property="og:title" content={props.title ? props.title : 'Regwrites | poems , short stories and more'} />
-            <meta property="og:description" content={props.body ? props.body : 'Get poems , short stories and more from regwrites'} />
+            <meta property="og:title" content={props.title ? props.title : 'Citrine Rewards | invest in your future'} />
+            <meta property="og:description" content={props.body ? props.body : 'Welcome to citrine rewards .Unlock your wealth'} />
             <meta property="og:image" content="/favicon.png" />
             <meta name="theme-color" content="#147" />
-            <title>{props.title ? props.title : 'Regwrites | poems , short stories and more'} </title>
-            <meta name="description" content={props.body ? props.body : 'get poems , short stories and more from regwrites'} />
+            <title>{props.title ? props.title : 'Citrine Rewards | invest in your future'} </title>
+            <meta name="description" content={props.body ? props.body : 'Citrine rewards . Unlock your wealth'} />
         </Head>
         <Toolbar noBg={props.noBg} />
         <div className="body">
