@@ -2,6 +2,7 @@ import React from 'react';
 import Link from './UI/Link/link';
 import firebase from '../firebase';
 import 'firebase/auth';
+import Router from 'next/router';
 
 
 export default props => {
@@ -17,7 +18,7 @@ export default props => {
             <img src="https://kinghoddy.now.sh/logo.png" style={{ height: '50px' }} className="d-none d-md-block" />  <span className="text">Create Your professional website today at <a href="https://kinghoddy.now.sh" >kinghoddy</a></span>
             <a className="btn btn-sm btn-outline-warning" href="https://kinghoddy.now.sh" >Learn more</a>
         </nav> */}
-        <nav className={"toolbar fixed-top navbar-expand-lg navbar navbar-dark py-2 py-lg-0   px-3 px-md-5"}>
+        <nav id="nav" className={"toolbar fixed-top navbar-expand-lg navbar navbar-dark py-2 py-lg-0   px-3 px-md-5"}>
             <Link href="/">
                 <a className="navbar-brand py-0">
                     <img alt="" src='/img/logo/logo_light_3.png' />
@@ -38,13 +39,18 @@ export default props => {
                 <ul className="navbar-nav mx-auto  mt-2 mt-lg-0">
                     <li className="nav-item ">
                         <Link activeClassName="active" href="/">
-                            <a className="nav-link"> Home</a>
+                            <a className="nav-link">
+                                <i className="fal fa-home mr-2"></i>
+                                Home</a>
                         </Link>
                     </li>
                     <li className="nav-item ">
 
-                        <Link activeClassName="active" href="/#about">
-                            <a className="nav-link">About us </a>
+                        <Link activeClassName="active" href="#about">
+                            <a onClick={e => {
+                                e.preventDefault();
+                                Router.push('/#about')
+                            }} className="nav-link">About us </a>
                         </Link>
                     </li>
                     <li className="nav-item ">
@@ -63,7 +69,9 @@ export default props => {
                 </ul>
 
                 {userExists ? <Link href="/dashboard">
-                    <a className="btn btn-dark" >DashBoard</a>
+                    <a className="btn btn-dark" >
+                        <i className="fal fa-desktop mr-2"></i>
+                        DashBoard</a>
                 </Link> : <div className="ml-auto d-flex  " >
                         <Link href="/login">
                             <a className="btn btn-dark mx-1 " >Login</a>
@@ -88,18 +96,18 @@ export default props => {
             width : 40%;
         }
         .toolbar{
-            background : #f31;
+            background : #e22;
         }
         .toolbar ul a {
-            font-size : 1.2rem;
+            font-size : 1rem;
             color : #fff;
             font-weight : bold;
             padding : 1rem 1.5rem !important;
         }
         .toolbar ul a:hover,
         .active {
-            color : #ff0;
-            border-bottom : 3px solid #fc0;
+            color : #ff0 !important;
+            background: #fc05;
         }
         .toolbar img {
             height : 3rem;
@@ -108,7 +116,13 @@ export default props => {
         }
         @media only screen and (min-width : 1200px){
           .toolbar{
-            background : ${props.noBg ? 'none' : '#f31'};
+            background : ${props.noBg ? 'none' : '#e22'};
+        }
+    .toolbar ul a:hover,
+        .active {
+            color : #ff0;
+            background : none;
+            border-bottom : 3px solid #fc0;
         }
             .toolbar img {
             height : ${props.noBg ? '6rem' : '3rem'};

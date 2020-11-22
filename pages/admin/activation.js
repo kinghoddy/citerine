@@ -7,26 +7,13 @@ import date from '../../components/date';
 export default class Category extends Component {
 
     state = {
-        users: [],
         req: []
     }
 
     componentDidMount() {
         this.getReq();
-        this.getUsers();
     }
-    getUsers = () => {
-        firebase.database().ref('users').once('value', s => {
-            const u = [];
-            for (let key in s.val()) {
-                if (s.val()[key].activated === true) u.push({
-                    ...s.val()[key],
-                    uid: key
-                })
-            }
-            this.setState({ users: u })
-        });
-    }
+
     getReq = () => {
         this.setState({ loading: true })
         firebase.database().ref('activationReq').on('value', s => {
@@ -54,14 +41,6 @@ export default class Category extends Component {
             this.setState({ req: r.reverse(), loading: false })
         })
     }
-    payeeChanged = (e, i, key) => {
-        let r = this.state.req;
-        r[i].payee = e.target.value;
-        console.log(r);
-        if (e.target.value) firebase.database().ref('users/' + key + '/activated').set('payee')
-        firebase.database().ref('activationReq/' + key + '/payee').set(e.target.value)
-        this.setState({ req: r })
-    }
 
     activate = (key) => {
         const db = firebase.database();
@@ -79,9 +58,8 @@ export default class Category extends Component {
     decline = (cur) => {
         const db = firebase.database();
         const m = prompt('Add a decline message');
-        if (m) db.ref('users//' + cur.uid + '/activated/declined').set(m).then(() => {
+        if (m) db.ref('users/' + cur.uid + '/activated/declined').set(m).then(() => {
 
-            db.ref('users/' + cur.uid + '/activated').set('payee');
             db.ref('users/' + cur.uid + '/notifications').push({
                 date: Date.now(),
                 title: 'Your proof of payment of activation fee was not approved because of the following reasons <br/>' + m,
@@ -106,7 +84,6 @@ export default class Category extends Component {
                                         <th scope="col">Username</th>
                                         <th scope="col">User id</th>
 
-                                        <th>Pay to</th>
                                         <th>Status</th>
                                         <th>Control</th>
                                     </tr>
@@ -117,15 +94,6 @@ export default class Category extends Component {
                                             <th scope="row">{i + 1}</th>
                                             <td className="text-capitalize" >{cur.username}</td>
                                             <td>{cur.uid.substring(0, 6)}</td>
-
-                                            <td>
-                                                <select value={cur.payee} className="form-control-sm form-control " onChange={(e) => this.payeeChanged(e, i, cur.key)}>
-                                                    <option value="" >Assign user</option>
-                                                    {this.state.users.map(cur => <option key={cur.uid} value={cur.uid} >
-                                                        {cur.username}
-                                                    </option>)}
-                                                </select>
-                                            </td>
                                             <td>
                                                 {cur.retry && <small className="text-warning">
                                                     Retried {date(cur.retry)}

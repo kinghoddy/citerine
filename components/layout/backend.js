@@ -104,18 +104,34 @@ export default class extends Component {
                             <i className="material-icons mr-1">dashboard</i>  Dashboard
                         </a>
                     </Link>
+                    <Link activeClassName={classes.active} href="/admin/activation">
+                        <a className={classes.sidenavLink} >
+                            <i className="material-icons mr-1">desktop_windows</i>Activations
+                        </a>
+                    </Link>
+                    <Link activeClassName={classes.active} href="/admin/messaging">
+                        <a className={classes.sidenavLink} >
+                            <i className="material-icons mr-1">people</i>Messaging
+                        </a>
+                    </Link>
+                    <Link activeClassName={classes.active} href="/admin/testimonials">
+                        <a className={classes.sidenavLink} >
+                            <i className="material-icons mr-1">face</i>Testimonials
+                        </a>
+                    </Link>
 
                     <Link activeClassName={classes.active} href="/admin/transactions">
                         <a className={classes.sidenavLink} >
                             <i className="material-icons mr-1">payment</i>Transactions
                         </a>
                     </Link>
-
-                    <Link activeClassName={classes.active} href="/admin/activation">
+                    <Link activeClassName={classes.active} href="/admin/referrals">
                         <a className={classes.sidenavLink} >
-                            <i className="material-icons mr-1">desktop_windows</i>Activations
+                            <i className="material-icons mr-1">face</i>Referrals
                         </a>
                     </Link>
+
+
                     <Link activeClassName={classes.active} href="/admin/users"  >
                         <a className={classes.sidenavLink}>
                             <i className="material-icons mr-1">people</i>  Users

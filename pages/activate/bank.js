@@ -69,10 +69,10 @@ class Bank extends React.Component {
                 {this.state.submitted ? <div className="">
                     <h5>You Bank Data has Been Saved Successfully </h5>
                     <div className="alert alert-info">
-                        Next , click on the <b>Request activation</b> button below.
-                        You will be required to pay a one time Activation fee of ₦1,000.00 to another User on the system. (The system will assign you to one of the principal guiders). You are to make this payment within 24 hours.
+                        Next , click on the <b>Pay Activation Fee</b> button below.
+                        You will be required to pay a one time Activation fee of ₦1,000.00 to Citrine Rewards. You are to make this payment within 24 hours.
                     </div>
-                    <button onClick={this.requestActivation} className="btn btn-info" >Request Activation</button>
+                    <button onClick={this.requestActivation} className="btn btn-info" >Pay Activation Fee</button>
                 </div> :
                     <form onSubmit={this.addBank}>
                         <div className="bg-warning p-3  mb-3 text-light">

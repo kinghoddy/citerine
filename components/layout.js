@@ -8,7 +8,7 @@ export default props => {
             <meta property="og:title" content={props.title ? props.title : 'Citrine Rewards | invest in your future'} />
             <meta property="og:description" content={props.body ? props.body : 'Welcome to citrine rewards .Unlock your wealth'} />
             <meta property="og:image" content="/favicon.png" />
-            <meta name="theme-color" content="#147" />
+            <meta name="theme-color" content="#d11" />
             <title>{props.title ? props.title : 'Citrine Rewards | invest in your future'} </title>
             <meta name="description" content={props.body ? props.body : 'Citrine rewards . Unlock your wealth'} />
         </Head>

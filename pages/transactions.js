@@ -69,6 +69,7 @@ export default class Transactions extends React.Component {
             for (let key in s.val()) {
                 let data = {
                     interest: 0,
+                    cashout: {},
                     status: {},
                     ...s.val()[key],
                     key
@@ -186,9 +187,27 @@ export default class Transactions extends React.Component {
         }
 
     };
+    cashOut(cur) {
+        if (cur.interest > 0) {
+
+            const con = confirm('You are about to cashout your investment of ' + cur.amount + '\n Interest: ' + cur.interest + '\n This acction is not reversible \n Click ok to continue');
+            if (con) {
+                const db = firebase.database();
+                db.ref('transactions/' + cur.key + '/cashout').set({
+                    date: Date.now(),
+                    status: 'requested'
+                })
+            }
+        } else {
+            alert('You cannot cash-out until the allocated time of investment in your investment plan')
+        }
+
+    }
+    reInvest(cur) {
+
+    }
     render() {
-        let earnings = 0
-        if (this.state.investments[0]) earnings = +this.state.investments[0].amount + +this.state.investments[0].interest;
+
         return (
             <Layout route="Transactions">
                 {this.state.error && <div className="alert alert-danger">{this.state.error}</div>}
@@ -237,63 +256,53 @@ export default class Transactions extends React.Component {
 
                 {this.state.loading ? <div style={{ height: '50vh' }}>
                     <Spinner />
-                </div> : !this.state.activated ? <p>Activate your account to start investment </p> : <React.Fragment> <p>Start investing today and get reward in 7 days</p>
-                    <div className="row ">
-                        <div className="col-md-6 mb-3">
-                            <div className="cards shadow-sm">
-                                <div className="data" >
-                                    <h5 className="text-uppercase">Earnings</h5>
-                                    <span>{formatter.format(earnings)} </span>
-                                </div>
-                                <div className="flex-column d-flex align-items-center">
-                                    <i className='fa fa-sac-dollar'></i>
-                                    <button className="btn btn-sm btn-primary button" >Cash Out</button>
-                                </div>
+                </div> : !this.state.activated ? <p>Activate your account to start investment </p> : <React.Fragment>
 
-
-                            </div>
-                        </div>
-                    </div>
                     {this.state.pending.status.verified === true ? null : this.state.pending.amount && <div className="alert alert-info shadow-sm">
                         {this.state.pending.proof ? <React.Fragment>
                             Your  proof of payment has been uploaded successfully <br /> The system will verify your payment and complete your investment. Check back for more info
                                                <a href={this.state.pending.proof.img} target="blank" className="btn btn-sm mt-2 btn-success">View photo</a>
                         </React.Fragment>
-                            : this.state.pending.payee ? <React.Fragment>To complete your investment of <b>{formatter.format(this.state.pending.amount)}</b> , you are to pay to <b className="text-capitalize">{this.state.pending.payee.username}</b>
-                                <button className="btn btn-info btn-sm mx-2" onClick={() => alert(`Account Name: ${this.state.pending.payee.bankDetails.name} \n Bank:  ${this.state.pending.payee.bankDetails.bank} \n Account Number: ${this.state.pending.payee.bankDetails.num}  `)} >View Bank Details</button>
+                            : <React.Fragment>To complete your investment of <b>{formatter.format(this.state.pending.amount)}</b> , you are to pay to citrine rewards <br />(Account Details on your dashboard)
                                 <br />
-                                Once payment is complete , Click on i've paid button below and upload your evidence of payment to verify your payment. Once payment is verified by the system , it will reflect in the table below.
-                                <button className="btn btn-info btn-sm mx-2" onClick={this.openModal} >I've Paid</button>
+                                Once payment is complete , Click on i've paid button below and upload your evidence of payment to verify your payment. Once payment is verified by the system , it will reflect in the table below. <br />
+                                <button className="btn btn-info btn-sm mt-2" onClick={this.openModal} >I've Paid</button>
 
-                            </React.Fragment> : <React.Fragment>
-                                    You have a pending investment of <b>{formatter.format(this.state.pending.amount)}</b> <br />
-                            You would be give the account details you are to pay to
                             </React.Fragment>}
                     </div>}
                     <div className="card border-0 shadow">
                         <div className="card-header border-0 justify-content-between d-flex">
                             <span className=' text-capitalize text-primary' >investments</span>
                             <Link href="/invest">
-                                <a className="btn btn-primary btn-sm">Invest</a>
+                                <a className="btn btn-success btn-sm">
+                                    <i className="fal mr-2 fa-receipt "></i>
+                                        New Investment</a>
                             </Link>
                         </div>
                         <div className="card-body ">
                             <div className="table-responsive">
-                                <table className="table " id="transTable">
+                                <table className="table table-borderless table-striped" id="transTable">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th  >#</th>
                                             <th>Amount</th>
                                             <th>Date</th>
                                             <th>Interest</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.investments.map((cur, i) => <tr>
-                                            <td>{i + 1}</td>
-                                            <td>{formatter.format(cur.amount)}</td>
+                                            <td className="th" >{i + 1}</td>
+                                            <td>{formatter.format(cur.amount)} <br />
+                                                {cur.cashout.status === 'requested' ? <span className="badge badge-warning" >Processing Cash-out</span> : cur.cashout.status === 'cashedOut' ? <span className="badge badge-secondary" >Cashed - out</span> : <span className="badge badge-primary" >Active</span>}
+                                            </td>
                                             <td>{dateFormat(cur.status.date)}</td>
                                             <td>{formatter.format(cur.interest)}</td>
+                                            <td className="d-flex">
+                                                <button disabled={cur.cashout.status && true} onClick={() => this.cashOut(cur)} className="btn-danger btn btn-sm ">Cash-Out</button>
+                                                <button disabled={cur.cashout.status && true} onClick={() => this.reInvest(cur)} className="btn ml-2 btn-sm btn-secondary">Re-Invest</button>
+                                            </td>
                                         </tr>)}
                                     </tbody>
                                 </table>
@@ -302,44 +311,28 @@ export default class Transactions extends React.Component {
                     </div>
                 </React.Fragment>}
                 <style jsx >{`
-            .cards {
-                background : #fff;
-                border-left : 3px solid #348;
-                border-radius : 4px;
-                display : flex;
-                justify-content : space-between;
-                align-items : center;
-                padding : 15px;
-            }
-            .data h5 {
-                font-size : .9rem;
-                margin-bottom : 4px;
-                color : #348;
-            }
-
-            i {
-                font-size : 30px;
-                opacity : .4;
-                color : #348
-            }
-            .button {
-                color : #348;
-                background : #4382;
-                border : 0 !important;
-            }
+      
+            
             .progBar {
   height: 3px;
   background: #eee;
   margin: 0.8rem 0;
   flex: 1;
 }
-
+.table td {
+    min-width : 100px;
+}
+.th{
+    min-width : 10px !important;
+}
 .progBar span {
   background: #282;
   display: block;
   height: 100%;
 }
-
+.btn {
+    white-space: nowrap;
+}
         `}</style>
             </Layout>
         )

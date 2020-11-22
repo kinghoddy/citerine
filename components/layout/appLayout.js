@@ -69,7 +69,8 @@ export default class extends Component {
             <div className="con">
                 <Head>
                     <title>{this.props.route}  | Citrine Rewards </title>
-                    <link rel="shortcut icon" href="/logo.png" />
+                    <meta property="og:image" content="/favicon.png" />
+                    <link rel="shortcut icon" href="/logo_text.png" />
                 </Head>
                 <div className={['wrapper', this.state.showSidenav ? 'show' : 's'].join(" ")} >
 
@@ -120,7 +121,7 @@ export default class extends Component {
                             <h5>{this.state.userData.username} </h5>
                         </div>
                     </div>
-                    <div className="content">
+                    <div className="content position-relative">
                         <nav className=" d-flex sticky-top bg-white border-bottom justify-content-between px-3 py-1">
                             <div className="d-flex align-items-center">
 

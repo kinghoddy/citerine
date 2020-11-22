@@ -18,17 +18,17 @@ class MyDocument extends Document {
                     <link rel="stylesheet" href="/iconfont/material-icons.css" />
                     <link rel="stylesheet" href="/fontawesome/css/fontawesome.min.css" />
                     <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
-                    <link rel="shortcut icon" href="/favicon.png" />
+                    <link rel="shortcut icon" href="/logo.png" />
                     <link rel="stylesheet" href="/css/index.css" />
                     <script src="/js/jquery.js"></script>
                     <script src="/js/wow.min.js"></script>
-                    <script src="/js/bootstrap.min.js"></script>
                     <script src="/js/bootstrap.bundle.min.js"></script>
+                    <script src="/js/bootstrap.min.js"></script>
                     <script>
                         new WOW().init()
                     </script>
                 </Head>
-                <body>
+                <body data-spy="scroll" data-target="#nav" data-offset="50">
                     <Main />
                     <NextScript />
                 </body>

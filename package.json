@@ -1,5 +1,5 @@
 {
-  "name": "regwrites",
+  "name": "citrine",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -20,6 +20,7 @@
     "jquery": "^3.5.1",
     "next": "9.4.0",
     "nodemailer": "^2.4.1",
+    "popper.js": "^1.16.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-scroll-parallax": "^2.3.2",

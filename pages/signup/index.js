@@ -66,8 +66,12 @@ class SignUp extends Component {
         shouldLogin: false,
         photo: '',
         name: '',
+        ref: {},
         toast: null
     };
+    static async getInitialProps({ query }) {
+        return { query }
+    }
     inputChanged = (e, id) => {
         const updatedForm = {
             ...this.state.form
@@ -78,9 +82,22 @@ class SignUp extends Component {
         this.setState({ form: updatedForm });
     };
     componentDidMount() {
-
+        console.log(this.props);
+        if (this.props.query.r) {
+            firebase.database().ref('users/' + this.props.query.r).once('value', s => {
+                let u = {
+                    username: s.val().username,
+                    uid: this.props.query.r
+                }
+                this.setState({ ref: u })
+            })
+        }
     }
     saveUser = (user, phone) => {
+        const formData = {};
+        for (let formId in this.state.form) {
+            formData[formId] = this.state.form[formId].value;
+        }
         var ref = firebase.database().ref("users/");
         ref.once("value", s => {
             const id = user.uid;
@@ -99,11 +116,28 @@ class SignUp extends Component {
                         // An error happened.
                     });
                     this.setState({ loading: true, sMessage: "Completing Signup  !" });
+                    if (this.state.ref.username) {
+                        firebase.database().ref('referrals').push({
+                            referrer: { ...this.state.ref },
+                            referee: {
+                                username: user.displayName,
+                                uid: id
+                            },
+                            date: Date.now()
+                        })
+                    }
                     ref
                         .child(id)
                         .set({
                             username: user.displayName.toLowerCase(),
                             phoneNumber: phone,
+                            notifications: this.state.ref.uid ? {
+                                '1': {
+                                    date: Date.now(),
+                                    title: 'You just signed up using ' + this.state.ref.username + "'s referral link"
+                                }
+                            } : null,
+                            ref: this.state.ref.username ? this.state.ref.uid : null,
                             email: user.email,
                             profilePicture: user.photoURL
                         })
@@ -113,7 +147,7 @@ class SignUp extends Component {
                             if (search) {
                                 Router.push("/" + search);
                             } else {
-                                Router.push("/");
+                                Router.push("/dashboard");
                             }
                         })
                         .catch(() => {
@@ -135,6 +169,7 @@ class SignUp extends Component {
                     .set({
                         username: user.displayName.toLowerCase(),
                         phoneNumber: phone,
+                        ref: this.state.ref.username ? this.state.ref.uid : null,
                         email: user.email,
                         profilePicture: user.photoURL
                     })
@@ -144,7 +179,7 @@ class SignUp extends Component {
                         if (search) {
                             Router.push("/" + search);
                         } else {
-                            Router.push("/");
+                            Router.push("/dashboard");
                         }
                     })
                     .catch(() => {
@@ -231,6 +266,7 @@ class SignUp extends Component {
                 <meta property="og:description"
                     content=" create your citrine rewards today account today" />
             </Head>
+            {this.state.ref.username && <p>You are Registering using <b className="text-capitalize">{this.state.ref.username}'s</b> Referral link</p>}
             {this.state.loading ? (
                 <Spinner message={this.state.sMessage} fontSize="5px" />
             ) : this.state.userExist ? (

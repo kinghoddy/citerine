@@ -7,7 +7,8 @@ import 'firebase/storage'
 import Link from 'next/link';
 import Card from '../components/card'
 import Spinner from '../components/UI/Spinner/Spinner'
-import $ from 'jquery'
+import $ from 'jquery';
+import date from '../components/date'
 
 class Dashboard extends React.Component {
     state = {
@@ -15,11 +16,12 @@ class Dashboard extends React.Component {
             username: '',
             profilePicture: ''
         },
-        pData: {
-            bankDetails: {}
-        },
+        messages: [],
+
         progBarLength: 0,
         loading: false,
+        nots: 0,
+        ref: 0,
         activated: false
     }
     checkActivationState = () => {
@@ -27,6 +29,7 @@ class Dashboard extends React.Component {
         firebase.auth().onAuthStateChanged(user => {
 
             if (user) {
+                this.loadDash(user)
                 const ref = firebase.database().ref('users/' + user.uid);
                 ref.on('value', s => {
                     if (s.val().activated) {
@@ -39,19 +42,7 @@ class Dashboard extends React.Component {
                             })
                         }
                         this.setState({ activated: a })
-                        if (a === 'payee') {
-                            firebase.database().ref('activationReq/' + user.uid + '/payee').once('value', snap => {
-                                firebase.database().ref('users/' + snap.val()).once('value', s => {
-                                    console.log(snap.val());
-                                    const pData = {
-                                        username: s.val().username,
-                                        uid: snap.val().substring(0, 6),
-                                        bankDetails: s.val().bankDetails
-                                    }
-                                    this.setState({ pData: pData })
-                                });
-                            })
-                        }
+
 
                     }
                     const userdata = { ...s.val(), uid: user.uid };
@@ -153,35 +144,34 @@ class Dashboard extends React.Component {
 
     };
     componentDidMount() {
-        this.checkActivationState()
+        this.checkActivationState();
+        this.getMessages()
+    }
+    loadDash(user) {
+        const db = firebase.database();
+        db.ref('users/' + user.uid + '/notifications').orderByChild('seen').equalTo(null).on('value', s => {
+            this.setState({ nots: s.numChildren() })
+        })
+        db.ref('referrals/').orderByChild('referrer/uid').equalTo(user.uid).on('value', s => {
+            this.setState({ ref: s.numChildren() })
+        })
+    }
+    getMessages = () => {
+        firebase.database().ref('messages').limitToLast(2).on('value', s => {
+            const m = []
+            for (let key in s.val()) {
+                m.push({
+                    ...s.val()[key],
+                    key
+                })
+            }
+            this.setState({ messages: m.reverse() })
+        })
     }
     render() {
         return (
             <Wrapper route="Dashboard">
                 {this.state.error && <div className="alert alert-danger">{this.state.error}</div>}
-                <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLongTitle">Bank Details for user {this.state.pData.username} </h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <h6 className="mb-0" >Account Name</h6>
-                                <p>{this.state.pData.bankDetails.name}</p>
-                                <h6 className="mb-0" >Bank Name</h6>
-                                <p>{this.state.pData.bankDetails.bank}</p>
-                                <h6 className="mb-0">Account Number</h6>
-                                <p>{this.state.pData.bankDetails.num}</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div className="modal fade" id="proofModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
@@ -242,50 +232,22 @@ class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-                {this.state.loading ? <div style={{ height: '50vh' }}> <Spinner /> </div> : <div>
+                {this.state.loading ? <div style={{ height: '50vh' }}> <Spinner /> </div> : <div >
                     <h3 className="hello" >Hello  {this.state.userData.username} </h3>
                     {this.state.activated.img && <div className="alert alert-success  shadow">
                         Your  proof of payment has been uploaded successfull <br /> The system will verify your payment and activate your account. Check back for more info
                                                <button type="button" className="btn mt-2 btn-success" data-toggle="modal" data-target="#proofModal">                        View photo</button>
                     </div>}
-                    {this.state.activated === 'payee' && <React.Fragment>
+                    {this.state.activated === 'requested' && <React.Fragment>
+
                         <div className="alert alert-info shadow-sm">
-                            You will be required to pay a one time Activation fee of ₦1,000.00 to another User on the system.<b>You are to make this payment within 24 hours. </b> </div>
-                        <div className="alert alert-light shadow-sm">
-                            Make payment of the exact amount to the User's account details. (This information is displayed below). You can make payment through bank transfer, bank deposit or internet banking. You will have to click on the 'View Bank Details' button to see these details.</div>
-                        <div className="alert alert-info shadow-sm">
-                            After making this payment, Click on the I've Paid button and upload your Proof of Payment to notify the system that you have made this payment.
-                            Call the user through the phone number given to you for confirmation.
+                            After making this payment, Click on the <b>I've Paid</b> button and upload your Proof of Payment to notify the system that you have made this payment.
                             After confirmation, Your account will be activated and you can start your investment immediately.
                     </div>
 
-                        <div className="alert alert-light shadow">
-                            <p className="font-weight-bold mb-1">
-                                You are to pay to :
-                                 </p>
-                            {this.state.pData.username ? <React.Fragment><p className="mb-0">
-                                <span className="text-warning" >Username :</span>
-                                <span className="px-2" >{this.state.pData.username}</span>
-                            </p>
-                                <p className="">
-                                    <span className="text-warning" >UserId :</span>
-                                    <span className="px-2" >{this.state.pData.uid}</span>
-
-                                </p>
-                                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                    View Bank Details
-</button>
-                            </React.Fragment> : <div className="spinner-border"></div>}
-                        </div>
 
                         <button onClick={this.openModal} className="btn btn-primary shadow-sm" >I've Paid</button>
                     </React.Fragment>}
-                    {this.state.activated === 'requested' && <div className="alert alert-info shadow">
-                        Your Request for activation is been processed. <br />
-                        The system will assign user for you to pay to.
-                        The account details of the user will be displayed on the dashboard.
-                        You will be required to make the payment within 24 hours and <b>upload an evidence of payment </b> to complete your activation
-                    </div>}
                     {!this.state.activated && <div className="activate shadow">
                         <div className="pr-2">
                             <h2>Your account is not activated </h2>
@@ -299,20 +261,62 @@ class Dashboard extends React.Component {
                             Activate my account</a>
                         </Link>
                     </div>}
-                    {this.state.activated === true && <React.Fragment>
-                        Your account has been activated
-                         <div className="row">
-                            <div className="col-md-6 mb-3 col-lg-4 ">
-                                <Card title={'Your Earnings'} href='/transactions' theme={'orange'} body='#0.00' icon='fa-money-bill' />
+                    <div className="row mt-3 ">
+                        <div className="col-md-6 mb-3 col-lg-4 ">
+                            <Card title={'Your Earnings'} href='/transactions' theme={'orange'} body='#0.00' icon='fa-money-bill' />
+                        </div>
+                        <div className="col-md-6 mb-3 col-lg-4 ">
+                            <Card title={'Investments'} href='/transactions' theme={'green'} body='#0.00' icon='fa-receipt' />
+                        </div>
+                        <div className="col-md-6 mb-3 col-lg-4 ">
+                            <Card title={'Notifications'} href='/notifications' theme={'#28d'} body={this.state.nots} icon='fa-bell' />
+                        </div>
+                        <div className="col-md-6 mb-3 col-lg-4 ">
+                            <Card title={'Referrals'} href='/referrals' theme={'#41a'} body={this.state.ref} icon='fa-share' />
+                        </div>
+                        <div className="col-md-6 mb-3 col-lg-4 ">
+                            <Card title={'My Account'} href='/account' theme={'#c10'} body={this.state.activated === true ? 'Activated' : 'Not Activated'} icon='fa-user' />
+                        </div>
+                    </div>
+                    <div className="alert shadow-sm alert-light">
+                        Account Status <span className="ml-2 badge badge-primary">{this.state.activated === true ? 'Active' : 'Not active'}</span>
+                    </div>
+                    {this.state.messages.length > 0 && <div className="mt-4 pt-4" >
+                        <h1 className="h4 mx-3 mb-4" style={{ fontWeight: '600' }} >Messages</h1>
+                        {this.state.messages.map(cur => <div className="shadow-sm card mb-2">
+                            <div className="card-header border-0">
+                                <span className="text-capitalize text-primary mb-0">{cur.title}</span>
                             </div>
-                            <div className="col-md-6 mb-3 col-lg-4 ">
-                                <Card title={'Investments'} href='/transactions' theme={'green'} body='#0.00' icon='fa-receipt' />
+                            <div className="card-body">
+                                <div style={{ fontSize: '.8rem' }} dangerouslySetInnerHTML={{ __html: cur.body }} ></div>
+
+                                <small className="text-primary mt-2 d-block ">
+                                    {date(cur.date)}
+                                </small>
                             </div>
-                            <div className="col-md-6 mb-3 col-lg-4 ">
-                                <Card title={'Notifications'} href='/notifications' theme={'#28d'} body='0' icon='fa-bell' />
+                        </div>)}
+                    </div>}
+                    <div className="row info">
+
+                        <div className="col-lg-6">
+                            <div className="alert alert-light shadow-sm text-center">
+                                <h6>For any enquiries, contact us @ </h6>
+                                <span className="text-warning">citrinerewards@gmail.com</span> <br />
+                                <span className="text-warning">08089040350</span>
+
                             </div>
                         </div>
-                    </React.Fragment>}
+                        <div className="col-lg-6">
+
+                            <div className="alert alert-light shadow-sm text-center">
+                                <h6>All payments should be made to this account</h6>
+                                <span className="text-warning" >Bank Name:</span> Citrine Bank <br />
+                                <span className="text-warning" >Account Name:</span> Citrine Rewards <br />
+                                <span className="text-warning" >Account Number:</span> 01245545264 <br />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 }
                 <style jsx>{`
@@ -329,18 +333,22 @@ class Dashboard extends React.Component {
                 .activate  h2 {
                     font-weight : 400;
                 }
+                .info {
+                    margin-top : 2rem;
+                }
 .progBar {
-  height: 3px;
+                        height: 3px;
   background: #eee;
   margin: 0.8rem 0;
   flex: 1;
 }
 
 .progBar span {
-  background: #282;
+                        background: #282;
   display: block;
   height: 100%;
 }
+
 
                 `}</style>
             </Wrapper >

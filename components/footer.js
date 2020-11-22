@@ -71,7 +71,7 @@ export default props => {
             </div>
             <div className="bottom row py-4 text-center border-top text-light">
                 <div className="col-12 col-md-6 mb-3 mb-md-0">
-                    <span>This site is developed by Noel Odunmilade</span>
+                    <span></span>
                 </div>
                 <div className="col-12 col-md-6  text-light">
                     <span className="px-2" >Terms and conditions</span> |
